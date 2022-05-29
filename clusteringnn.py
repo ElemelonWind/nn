@@ -25,7 +25,7 @@ def dot_product(input, weights):
 def final_transform(input, weights):
     return [input[i]*weights[i] for i in range(len(input))]
 
-# Complete the whole forward feeding for one input(training) set
+# forward feeding for one input(training) set
 # return updated x_vals and error of the one forward feeding
 def ff(ts, xv, weights, t_funct):
    
@@ -38,7 +38,7 @@ def ff(ts, xv, weights, t_funct):
    err = sum([(ts[-output_len+i] - xv[-1][i])**2 for i in range(len(xv[-1]))]) / 2
    return xv, err
 
-# Complete the back propagation with one training set and corresponding x_vals and weights
+# back propagation with one training set and corresponding x_vals and weights
 # update E_vals (ev) and negative_grad, and then return those two lists
 def bp(ts, xv, weights, ev, negative_grad):   
 
@@ -64,7 +64,6 @@ def bp(ts, xv, weights, ev, negative_grad):
     return ev, negative_grad
 
 # update all weights and return the new weights
-# Challenge: one line solution is possible
 def update_weights(weights, negative_grad, alpha):
 
    for i in range(len(weights)):
@@ -111,11 +110,8 @@ def main():
    equation = args[0]
    radius = float(re.search('[\d.]+', equation).group())
    equality = re.search('(?<=x\*x\+y\*y)(.+)', equation.replace(str(radius), "")).group()
-   
-   # training_set
-   output_len = 1 
 
-   #print(training_set)
+   output_len = 1 
    
    layer_counts = [3, 3, 2, output_len, output_len] # set the number of layers
 
@@ -158,8 +154,6 @@ def main():
     err = sum(errors)
     
     while err > 2 and count < 100:
-        # if count % 10 == 0: 
-        #     print(count, err)
         if err > 150:
             weights = [[round(random.uniform(-1.0, 1.0), 2) for j in range(layer_counts[i]*layer_counts[i+1])] for i in range(len(layer_counts)-2)]
             weights.append([round(random.uniform(-1.0, 1.0), 2) for j in range(output_len)])
@@ -196,8 +190,6 @@ def main():
     count = 0
 
     while err > 2 and count < 200:
-        # if count % 10 == 0: 
-        #     print(count, err)
         if err > 150:
             weights = [[round(random.uniform(-1.0, 1.0), 2) for j in range(layer_counts[i]*layer_counts[i+1])] for i in range(len(layer_counts)-2)]
             weights.append([round(random.uniform(-1.0, 1.0), 2) for j in range(output_len)])
@@ -208,10 +200,7 @@ def main():
                 weights = update_weights(weights, negative_grad, alpha)
         err = sum(errors)
         count+=1
-    
-   # print('Errors:', errors)
    print ('Layer counts:', layer_counts)
    print ('Weights:')
    for w in weights: print (w)
 if __name__ == '__main__': main()
-# Cindy Yang, Period 5, 2023
